@@ -7,25 +7,24 @@ import (
 )
 
 type Page struct {
-	Now time.Time
+	Now   time.Time
+	Items []string
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("html/top.html")
+	if err != nil {
+		panic(err)
+	}
+
+	page := Page{time.Now(), []string{"foo", "bar", "baz"}}
+	err = tmpl.Execute(w, page)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func main() {
-
-	handler := func(w http.ResponseWriter, r *http.Request) {
-		tmpl, err := template.ParseFiles("html/top.html")
-		if err != nil {
-			panic(err)
-		}
-
-		page := Page{time.Now()}
-		err = tmpl.Execute(w, page)
-		if err != nil {
-			panic(err)
-		}
-	}
-
 	http.HandleFunc("/", handler)
 	http.ListenAndServe("localhost:3000", nil)
-
 }

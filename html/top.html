@@ -7,5 +7,14 @@
 
 	<hr/>
 
+	<div>
+		{{range $i, $v := .Items}}
+		<p> item = {{$v}} </p>
+		{{end}}
+	</div>
+
+
+	<hr/>
+
 	<p> Now: {{.Now}} </p>
 </html>
