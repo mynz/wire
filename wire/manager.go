@@ -40,9 +40,9 @@ type Manager struct {
 	FileSpecs []FileSpec `json:"fileSpecs"`
 }
 
-func NewManager(rootDir string) *Manager {
+func NewManager(conf *Config) *Manager {
 	man := new(Manager)
-	man.RootDir = rootDir
+	man.RootDir = conf.RootDir
 	return man
 }
 

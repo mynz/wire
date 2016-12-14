@@ -14,7 +14,10 @@ func main() {
 	// rootDir := "D:/go"
 
 	conf := wire.NewConfig()
-	man := wire.NewManager(conf.RootDir)
+
+	conf.SaveFile()
+
+	man := wire.NewManager(conf)
 
 	if b, _ := man.LoadFile(managerPath); b {
 		fmt.Printf("%s file was loaded, files: %d\n", managerPath, man.GetNumFiles())
