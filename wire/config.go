@@ -9,7 +9,7 @@ import (
 const configPath = "_config.json"
 
 type Config struct {
-	RootDir string
+	RootDir string `json:"rootDir"`
 }
 
 func NewConfig() *Config {
@@ -21,6 +21,14 @@ func NewConfig() *Config {
 func (conf *Config) Setup() {
 	if ap, err := filepath.Abs(conf.RootDir); err == nil {
 		conf.RootDir = ap
+	}
+}
+
+func (conf *Config) LoadFile() error {
+	if bs, err := ioutil.ReadFile(configPath); err != nil {
+		return err
+	} else {
+		return json.Unmarshal(bs, conf)
 	}
 }
 

@@ -14,7 +14,9 @@ func main() {
 	// rootDir := "D:/go"
 
 	conf := wire.NewConfig()
-
+	if conf.LoadFile() == nil {
+		fmt.Println("config file was loaded")
+	}
 	conf.SaveFile()
 
 	man := wire.NewManager(conf)
