@@ -8,16 +8,16 @@ import (
 func main() {
 	fmt.Println("Hello")
 
-	statusPath := "_status.json"
+	managerPath := "_manager.json"
 	rootDir := "."
 	// rootDir := "D:/go"
 
 	man := wire.NewManager(rootDir)
 
-	if b, _ := man.LoadFile(statusPath); b {
-		fmt.Printf("%s file was loaded, files: %d\n", statusPath, man.GetNumFiles())
+	if b, _ := man.LoadFile(managerPath); b {
+		fmt.Printf("%s file was loaded, files: %d\n", managerPath, man.GetNumFiles())
 	}
 
 	man.Evaluate()
-	man.SaveFile(statusPath)
+	man.SaveFile(managerPath)
 }
