@@ -1,0 +1,26 @@
+[
+  {
+    "path": "README.md",
+    "size": 6,
+    "mtime": "2016-12-14T13:57:42.1111477+09:00",
+    "hash": "9916731cc528eb1f6ae577971f3bc7ca3412729745ddef18158ef7cfdcb1c4c093b0b98d953315df4367c67df2b045e66874c3549bd26b85e226f0bf2ac8b627"
+  },
+  {
+    "path": "exercise.go",
+    "size": 1908,
+    "mtime": "2016-12-14T16:04:08.2980492+09:00",
+    "hash": "f466e3c950db19020a797b6607b93d72e40cd8e8360d136ed6a786247e2415d4c5eee2fe4997c7546d9d34a38f214627c379d55d39961256157115214e2cb9a4"
+  },
+  {
+    "path": "status.json",
+    "size": 592,
+    "mtime": "2016-12-14T15:59:31.1793401+09:00",
+    "hash": "5cf6882c8043b92b11ddadb4dc9fcce61fd590133ba59eb0143e79d132edbf57da044024ee74bd76086bccee23fc2b4a404567b56f0c06c8e9d0f4607cf76f77"
+  },
+  {
+    "path": "testdata\\foo.txt",
+    "size": 14,
+    "mtime": "2016-12-14T13:56:14.8514226+09:00",
+    "hash": "7a9f53255201015210e60519a97be02ac049f1c3c3f5d9033ac38d3735ee3f6ab5de438028054877b1a8babb7f90af189111dee742cfecf9ae9b364af3fc287d"
+  }
+]

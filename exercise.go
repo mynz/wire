@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"time"
 	// "strconv"
 	"encoding/json"
 )
@@ -23,9 +24,10 @@ func (hash *HashDigit) String() string {
 ////
 
 type FileSpec struct {
-	Path string `json:"path"`
-	Size int64  `json:"size"`
-	Hash string `json:"hash"`
+	Path  string    `json:"path"`
+	Size  int64     `json:"size"`
+	MTime time.Time `json:"mtime"`
+	Hash  string    `json:"hash"`
 }
 
 func (fs FileSpec) String() string {
@@ -64,6 +66,7 @@ func CollectFileSpecs(rootDir string) []FileSpec {
 	for i, info := range infoList {
 		path := info.Path
 		size := info.FileInfo.Size()
+		mtime := info.FileInfo.ModTime()
 		fmt.Println("file", i, path)
 		if bs, err := ioutil.ReadFile(path); err != nil {
 			panic(err)
@@ -72,7 +75,7 @@ func CollectFileSpecs(rootDir string) []FileSpec {
 
 			hex := HashDigit(sha512.Sum512(bs))
 			hstr := hex.String()
-			specs = append(specs, FileSpec{path, size, hstr})
+			specs = append(specs, FileSpec{path, size, mtime, hstr})
 		}
 	}
 	return specs
