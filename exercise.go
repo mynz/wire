@@ -94,7 +94,7 @@ func main() {
 	bs, _ := json.MarshalIndent(fileSpecs, "", "  ")
 	fmt.Println(string(bs[:]))
 
-	statusPath := "status.json"
+	statusPath := "_status.json"
 	if err := ioutil.WriteFile(statusPath, bs, 0666); err != nil {
 		panic(err)
 	}
