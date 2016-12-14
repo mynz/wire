@@ -13,7 +13,12 @@ func main() {
 	// rootDir := "D:/go"
 
 	man := wire.NewManager(rootDir)
-	man.Evalueate()
+
+	if b, _ := man.LoadFile(statusPath); b {
+		fmt.Printf("%s file was loaded, files: %d\n", statusPath, man.GetNumFiles())
+	}
+
+	man.Evaluate()
 	man.SaveFile(statusPath)
 
 	/*

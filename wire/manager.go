@@ -36,14 +36,18 @@ func (fs FileSpec) String() string {
 ////
 
 type Manager struct {
-	RootDir   string
-	FileSpecs []FileSpec
+	RootDir   string     `json:"rootDir"`
+	FileSpecs []FileSpec `json:"fileSpecs"`
 }
 
 func NewManager(rootDir string) *Manager {
 	man := new(Manager)
 	man.RootDir = rootDir
 	return man
+}
+
+func (man *Manager) GetNumFiles() int {
+	return len(man.FileSpecs)
 }
 
 func collectFileSpecs(rootDir string) []FileSpec {
@@ -84,16 +88,25 @@ func collectFileSpecs(rootDir string) []FileSpec {
 	return specs
 }
 
-func (man *Manager) Evalueate() {
+func (man *Manager) Evaluate() {
 	man.FileSpecs = collectFileSpecs(man.RootDir)
 }
 
 func (man *Manager) SaveFile(path string) error {
-	bs, _ := json.MarshalIndent(man.FileSpecs, "", "  ")
-	fmt.Println(string(bs[:]))
-
+	bs, _ := json.MarshalIndent(man, "", "  ")
 	if err := ioutil.WriteFile(path, bs, 0666); err != nil {
 		return err
 	}
 	return nil
+}
+
+func (man *Manager) LoadFile(path string) (bool, error) {
+	bs, err := ioutil.ReadFile(path)
+	if err != nil {
+		return false, err
+	}
+	if err := json.Unmarshal(bs, &man); err != nil {
+		return false, err
+	}
+	return true, nil
 }
