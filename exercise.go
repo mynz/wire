@@ -22,23 +22,27 @@ func (hash *HashDigit) String() string {
 ////
 
 type FileSpec struct {
-	Path       string
-	FileInfo   os.FileInfo
-	HashString string
+	Path    string
+	Size    int64
+	HashStr string
 }
 
-func NewFileSpec(path string, fi os.FileInfo) *FileSpec {
-	return &FileSpec{path, fi, ""}
+func (fs FileSpec) String() string {
+	return fmt.Sprintf("path: %s, size: %d, Hash: %s...", fs.Path, fs.Size, fs.HashStr[0:8])
 }
 
 ////
 
-func main() {
-	fmt.Println("Hello")
+func CollectFileSpecs(rootDir string) []FileSpec {
 
-	fileSpecs := make([]FileSpec, 0)
+	type Info struct {
+		Path     string
+		FileInfo os.FileInfo
+	}
 
-	filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
+	infoList := make([]Info, 0)
+
+	filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
 		if info.IsDir() {
 			if info.Name() == ".git" {
 				return filepath.SkipDir
@@ -46,28 +50,39 @@ func main() {
 		}
 		// check if it is a relgular file.
 		if info.Mode().IsRegular() {
-			fileSpecs = append(fileSpecs, *NewFileSpec(path, info))
+			fs := Info{Path: path, FileInfo: info}
+			infoList = append(infoList, fs)
 		}
 		return nil
 	})
 
-	for i, fspec := range fileSpecs {
+	fmt.Println("len infoList: ", len(infoList))
 
-		path := fspec.Path
+	specs := make([]FileSpec, 0, len(infoList))
 
+	for i, info := range infoList {
+		path := info.Path
+		size := info.FileInfo.Size()
 		fmt.Println("file", i, path)
-
 		if bs, err := ioutil.ReadFile(path); err != nil {
 			panic(err)
 		} else {
 			fmt.Println(len(bs))
 
 			hex := HashDigit(sha512.Sum512(bs))
-			fmt.Println("hex", hex)
-
 			hstr := hex.String()
-			fmt.Println(hstr)
-
+			specs = append(specs, FileSpec{path, size, hstr})
 		}
 	}
+	return specs
+}
+
+func main() {
+	fmt.Println("Hello")
+
+	rootDir := "."
+	// rootDir := "D:/go"
+
+	fileSpecs := CollectFileSpecs(rootDir)
+	fmt.Println(fileSpecs)
 }
