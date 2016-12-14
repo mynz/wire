@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	// "strconv"
+	"encoding/json"
 )
 
 type HashDigit [64]byte
@@ -22,13 +23,13 @@ func (hash *HashDigit) String() string {
 ////
 
 type FileSpec struct {
-	Path    string
-	Size    int64
-	HashStr string
+	Path string `json:"path"`
+	Size int64  `json:"size"`
+	Hash string `json:"hash"`
 }
 
 func (fs FileSpec) String() string {
-	return fmt.Sprintf("path: %s, size: %d, Hash: %s...", fs.Path, fs.Size, fs.HashStr[0:8])
+	return fmt.Sprintf("path: %s, size: %d, Hash: %s...", fs.Path, fs.Size, fs.Hash[0:8])
 }
 
 ////
@@ -85,4 +86,13 @@ func main() {
 
 	fileSpecs := CollectFileSpecs(rootDir)
 	fmt.Println(fileSpecs)
+
+	// json.Marshal(fileSpecs)
+	bs, _ := json.MarshalIndent(fileSpecs, "", "  ")
+	fmt.Println(string(bs[:]))
+
+	statusPath := "status.json"
+	if err := ioutil.WriteFile(statusPath, bs, 0666); err != nil {
+		panic(err)
+	}
 }
