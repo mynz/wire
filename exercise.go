@@ -18,6 +18,8 @@ func main() {
 		fmt.Printf("%s file was loaded, files: %d\n", managerPath, man.GetNumFiles())
 	}
 
+	fmt.Println("num files: ", man.GetNumFiles())
+
 	man.Evaluate()
 	man.SaveFile(managerPath)
 }
