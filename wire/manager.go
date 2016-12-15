@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+const (
+	ManagerPath = "_manager.json"
+)
+
 type hashDigit [64]byte
 
 func (hash *hashDigit) String() string {

@@ -9,10 +9,6 @@ import (
 func main() {
 	fmt.Println("Hello")
 
-	managerPath := "_manager.json"
-	// rootDir := "."
-	// rootDir := "D:/go"
-
 	conf := wire.NewConfig()
 	if conf.LoadFile() == nil {
 		fmt.Println("config file was loaded")
@@ -21,12 +17,12 @@ func main() {
 
 	man := wire.NewManager(conf)
 
-	if b, _ := man.LoadFile(managerPath); b {
-		fmt.Printf("%s file was loaded, files: %d\n", managerPath, man.GetNumFiles())
+	if b, _ := man.LoadFile(wire.ManagerPath); b {
+		fmt.Printf("%s file was loaded, files: %d\n", wire.ManagerPath, man.GetNumFiles())
 	}
 
 	fmt.Println("num files: ", man.GetNumFiles())
 
 	man.Evaluate()
-	man.SaveFile(managerPath)
+	man.SaveFile(wire.ManagerPath)
 }

@@ -28,7 +28,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	managerPath := "_manager.json"
 	rootDir := "."
 
 	man := wire.NewManager(rootDir)
