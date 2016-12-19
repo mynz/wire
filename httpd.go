@@ -39,5 +39,5 @@ func main() {
 	fmt.Println("num files: ", man.GetNumFiles())
 
 	http.HandleFunc("/", handler)
-	http.ListenAndServe("localhost:3000", nil)
+	http.ListenAndServe(":3000", nil)
 }
